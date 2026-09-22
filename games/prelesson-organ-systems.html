@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;title&gt;Pre-Lesson: Body Blueprint&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>:root {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--bg:#0a0e1a; --panel:#151b2b; --card:#1e2640;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--text:#e2e8f0; --muted:#94a3b8;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--green:#10b981; --red:#ef4444; --blue:#3b82f6;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--purple:#8b5cf6; --gold:#fbbf24;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>* { box-sizing:border-box; margin:0; padding:0; user-select:none; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>body { background:var(--bg); color:var(--text); font-family:'Segoe UI', Roboto, sans-serif;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background-image: radial-gradient(circle at 30% 20%, rgba(16,185,129,0.1), transparent 50%),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>radial-gradient(circle at 70% 80%, rgba(59,130,246,0.1), transparent 50%);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>header { width:100%; max-width:950px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.back-btn { background:var(--panel); color:var(--muted); text-decoration:none; padding:10px 18px; border-radius:10px; font-weight:bold; border:1px solid rgba(255,255,255,0.1); font-size:0.9rem; transition:0.2s; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.back-btn:hover { color:white; background:#2a3450; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.hud { display:flex; gap:10px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.hud-box { background:var(--panel); padding:10px 18px; border-radius:10px; font-weight:bold; font-size:0.9rem; border-bottom:3px solid var(--green); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.hud-box span { color:var(--gold); }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.game-wrap { width:100%; max-width:950px; background:var(--panel); border-radius:20px; padding:30px; box-shadow:0 20px 50px rgba(0,0,0,0.6); border:1px solid rgba(16,185,129,0.2); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.progress-track { width:100%; height:6px; background:rgba(255,255,255,0.08); border-radius:10px; margin-bottom:25px; overflow:hidden; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,#10b981,#3b82f6); transition:width 0.5s; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#start-screen, #results-screen { display:none; text-align:center; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#start-screen.active, #results-screen.active { display:block; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#start-screen h1, #results-screen h1 { font-size:2rem; margin-bottom:15px; background:linear-gradient(135deg,#10b981,#3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#start-screen p, #results-screen p { color:var(--muted); font-size:1rem; line-height:1.6; max-width:640px; margin:0 auto 20px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.icon-big { font-size:4rem; margin-bottom:10px; animation:float 3s ease-in-out infinite; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-primary { background:linear-gradient(135deg,#10b981,#3b82f6); color:white; border:none; padding:16px 45px; border-radius:50px; font-size:1.05rem; font-weight:bold; text-transform:uppercase; letter-spacing:1px; cursor:pointer; transition:0.2s; box-shadow:0 0 25px rgba(16,185,129,0.5); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-primary:hover { transform:scale(1.05); }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#play-screen { display:none; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#play-screen.active { display:block; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.q-tag { display:inline-block; background:rgba(16,185,129,0.15); color:#6ee7b7; padding:6px 16px; border-radius:20px; font-size:0.8rem; font-weight:bold; text-transform:uppercase; letter-spacing:2px; margin-bottom:15px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.q-text { font-size:1.4rem; font-weight:600; margin-bottom:22px; line-height:1.4; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.options { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.option {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background:var(--card); border:2px solid rgba(255,255,255,0.1); padding:18px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius:12px; cursor:pointer; transition:0.2s; font-size:0.95rem; font-weight:600;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>text-align:center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.option:hover { border-color:var(--green); transform:translateY(-3px); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.option.correct { background:rgba(16,185,129,0.25); border-color:var(--green); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.option.wrong { background:rgba(239,68,68,0.25); border-color:var(--red); }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.feedback { display:none; padding:16px 20px; border-radius:12px; margin-bottom:15px; line-height:1.5; font-size:0.95rem; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.feedback.show { display:block; animation:slide 0.3s; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.feedback.ok { background:rgba(16,185,129,0.15); border-left:4px solid var(--green); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.feedback.bad { background:rgba(239,68,68,0.15); border-left:4px solid var(--red); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@keyframes slide { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.next-btn { background:var(--purple); color:white; border:none; padding:12px 30px; border-radius:10px; font-weight:bold; cursor:pointer; display:none; font-size:0.95rem; transition:0.2s; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.next-btn.show { display:inline-block; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.next-btn:hover { background:#7c3aed; transform:scale(1.05); }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.level-badge { font-size:4rem; margin:10px 0; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.level-title { font-size:1.6rem; font-weight:bold; color:var(--gold); margin-bottom:10px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.score-big { font-size:3rem; font-weight:900; margin:15px 0; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.misconception-list { background:rgba(239,68,68,0.1); border-left:4px solid var(--red); padding:20px; border-radius:12px; text-align:left; margin:20px auto; max-width:620px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.misconception-list h3 { color:#fca5a5; margin-bottom:10px; font-size:1rem; text-transform:uppercase; letter-spacing:1px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.misconception-list ul { padding-left:20px; line-height:1.7; color:#cbd5e1; font-size:0.95rem; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.action-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:20px; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@media (max-width:600px) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.options { grid-template-columns:1fr; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.q-text { font-size:1.15rem; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.game-wrap { padding:20px; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>#start-screen h1 { font-size:1.6rem; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;header&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;a href="../index.html" class="back-btn"&gt;← Dashboard&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="hud"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="hud-box"&gt;Q: &lt;span id="hud-q"&gt;0&lt;/span&gt;/8&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="hud-box"&gt;Score: &lt;span id="hud-score"&gt;0&lt;/span&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/header&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="game-wrap"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="progress-track"&gt;&lt;div class="progress-fill" id="prog"&gt;&lt;/div&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="start-screen" class="active"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="icon-big"&gt;🩺&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h1&gt;Body Blueprint&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p&gt;&lt;strong&gt;Pre-Lesson Challenge&lt;/strong&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>Before we dive in, let's see what you already know about organ systems! Match organs to their correct system,<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>and identify whether structures belong to plants or animals.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p style="font-size:0.9rem;"&gt;No penalties — this reveals your starting point so we know what to focus on!&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="btn-primary" id="start-btn"&gt;Start Challenge&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="play-screen"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="q-tag" id="q-tag"&gt;Question 1&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="q-text" id="q-text"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="options" id="options"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="feedback" id="feedback"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="next-btn" id="next-btn"&gt;Next →&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="results-screen"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="level-badge" id="level-badge"&gt;🌟&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h1 id="results-title"&gt;Challenge Complete!&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="level-title" id="level-title"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="score-big" id="final-score"&gt;0/8&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p id="results-msg"&gt;&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="misconception-list" id="misconceptions"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h3&gt;🔬 Topics to Explore in Our Lesson&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;ul id="misconception-items"&gt;&lt;/ul&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="action-row"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="btn-primary" id="restart-btn"&gt;Try Again&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;a href="../index.html" class="back-btn" style="padding:16px 30px;"&gt;← Dashboard&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p1"><span class="s1">const questions = [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ tag:"Question 1", q:"Which organ system contains the heart and blood vessels?",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Respiratory","Circulatory","Digestive","Nervous"], correct:1,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"The Circulatory System transports blood, nutrients, and oxygen throughout the body using the heart and vessels.",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>topic:"Animal Systems" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ tag:"Question 2", q:"Which structure transports water in plants?",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Phloem","Xylem","Stomata","Cuticle"], correct:1,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Xylem transports water and minerals UP from roots. Phloem transports sugars DOWN/AROUND the plant.",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>topic:"Plant Systems" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ tag:"Question 3", q:"Which system defends the body against disease?",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Endocrine","Immune","Excretory","Muscular"], correct:1,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"The Immune/Lymphatic system uses white blood cells and antibodies to defend against pathogens.",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>topic:"Animal Systems" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ tag:"Question 4", q:"Gas exchange in plants occurs mainly through…",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Roots","Stomata","Xylem","Flowers"], correct:1,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Stomata are tiny pores on leaves that allow CO₂ in and O₂ out — the plant's version of breathing.",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>topic:"Plant Systems" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ tag:"Question 5", q:"Which system removes waste products like urea?",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Digestive","Excretory","Respiratory","Reproductive"], correct:1,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"The Excretory system (kidneys, bladder) filters and removes metabolic wastes from the body.",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>topic:"Animal Systems" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ tag:"Question 6", q:"Plants are autotrophic. What does this mean?",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["They eat other organisms","They make their own food","They don't need energy","They only absorb nutrients"], correct:1,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Autotrophic = 'self-feeding.' Plants make their own food through photosynthesis using sunlight, CO₂, and water.",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>topic:"Life Processes" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ tag:"Question 7", q:"What is HOMEOSTASIS?",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["The process of reproduction","Maintaining a stable internal environment","Movement of organisms","Breaking down food"], correct:1,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Homeostasis is the body's ability to keep stable internal conditions (temperature, pH, water balance) despite external changes.",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>topic:"Core Concepts" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ tag:"Question 8", q:"Which of these is found ONLY in plants?",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Nervous system","Vascular system (xylem/phloem)","Digestive system","Immune system"], correct:1,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Xylem and phloem are unique to plants. Animals have nervous, digestive, and immune systems instead.",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>topic:"Plant vs Animal" }</span></p>
+<p class="p1"><span class="s1">];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let state={idx:0,score:0,answered:false,mistakes:[]};</span></p>
+<p class="p1"><span class="s1">const D={</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>start:document.getElementById('start-screen'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>play:document.getElementById('play-screen'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>results:document.getElementById('results-screen'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>startBtn:document.getElementById('start-btn'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>restartBtn:document.getElementById('restart-btn'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>nextBtn:document.getElementById('next-btn'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>qTag:document.getElementById('q-tag'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>qText:document.getElementById('q-text'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>options:document.getElementById('options'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>feedback:document.getElementById('feedback'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>hudQ:document.getElementById('hud-q'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>hudScore:document.getElementById('hud-score'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>prog:document.getElementById('prog'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>levelBadge:document.getElementById('level-badge'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>levelTitle:document.getElementById('level-title'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>finalScore:document.getElementById('final-score'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>resultsMsg:document.getElementById('results-msg'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>misconceptions:document.getElementById('misconceptions'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>misconceptionItems:document.getElementById('misconception-items')</span></p>
+<p class="p1"><span class="s1">};</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let audioCtx;</span></p>
+<p class="p1"><span class="s1">function beep(f,d,t='sine',v=0.15){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>try{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const o=audioCtx.createOscillator(),g=audioCtx.createGain();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>o.connect(g);g.connect(audioCtx.destination);o.type=t;o.frequency.value=f;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>g.gain.setValueAtTime(v,audioCtx.currentTime);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+d);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>o.start();o.stop(audioCtx.currentTime+d);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}catch(e){}</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">const sfx={click:()=&gt;beep(500,0.08,'triangle',0.1),ok:()=&gt;{beep(600,0.12);setTimeout(()=&gt;beep(900,0.15),100);},bad:()=&gt;beep(150,0.3,'sawtooth',0.15),done:()=&gt;{beep(500,0.15);setTimeout(()=&gt;beep(700,0.15),150);setTimeout(()=&gt;beep(1000,0.3),300);}};</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function startGame(){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>state={idx:0,score:0,answered:false,mistakes:[]};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.start.classList.remove('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.results.classList.remove('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.play.classList.add('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.hudScore.textContent=0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>loadQ();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function loadQ(){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(state.idx&gt;=questions.length){return endGame();}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>state.answered=false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const q=questions[state.idx];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.qTag.textContent=q.tag;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.qText.textContent=q.q;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.hudQ.textContent=state.idx+1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.prog.style.width=`${(state.idx/questions.length)*100}%`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.options.innerHTML='';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.feedback.className='feedback';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.nextBtn.classList.remove('show');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>q.options.forEach((opt,i)=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const el=document.createElement('div');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>el.className='option';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>el.textContent=opt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>el.addEventListener('click',()=&gt;answer(i));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.options.appendChild(el);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function answer(i){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(state.answered) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>state.answered=true;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const q=questions[state.idx];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const isRight=i===q.correct;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.option').forEach((o,idx)=&gt;{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>o.style.pointerEvents='none';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if(idx===q.correct) o.classList.add('correct');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>else if(idx===i) o.classList.add('wrong');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(isRight){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>sfx.ok(); state.score++;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.hudScore.textContent=state.score;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.feedback.className='feedback show ok';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.feedback.innerHTML=`✅ &lt;strong&gt;Correct!&lt;/strong&gt; ${q.explain}`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}else{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>sfx.bad();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>state.mistakes.push(q.topic);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.feedback.className='feedback show bad';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.feedback.innerHTML=`❌ &lt;strong&gt;Not quite.&lt;/strong&gt; ${q.explain}`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.nextBtn.classList.add('show');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.nextBtn.textContent=state.idx&lt;questions.length-1?'Next →':'See Results →';</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">D.nextBtn.addEventListener('click',()=&gt;{sfx.click();state.idx++;if(state.idx&gt;=questions.length)endGame();else loadQ();});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function endGame(){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.play.classList.remove('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.results.classList.add('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.prog.style.width='100%';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.finalScore.textContent=`${state.score}/${questions.length}`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const pct=state.score/questions.length;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>let badge,title,msg;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(pct&gt;=0.85){badge='🏆';title='System Expert!';msg='Excellent! You already have a strong grasp of organ systems. Our lesson will connect these concepts deeper.';}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>else if(pct&gt;=0.6){badge='🩺';title='Junior Biologist';msg='Good instincts! You know many systems. Let\'s sharpen your understanding of how they all work together.';}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>else{badge='🌱';title='Curious Learner';msg='Great starting point! We\'ll explore how organs work together to keep organisms alive.';}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.levelBadge.textContent=badge;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.levelTitle.textContent=title;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.resultsMsg.textContent=msg;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(state.mistakes.length&gt;0){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.misconceptions.style.display='block';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const uniq=[...new Set(state.mistakes)];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.misconceptionItems.innerHTML=uniq.map(m=&gt;`&lt;li&gt;Revisit: &lt;strong&gt;${m}&lt;/strong&gt;&lt;/li&gt;`).join('');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.misconceptions.style.display='block';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.misconceptionItems.innerHTML='&lt;li&gt;You answered everything correctly! We\'ll explore homeostasis, comparisons, and deeper system interactions.&lt;/li&gt;';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>sfx.done();</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">D.startBtn.addEventListener('click',()=&gt;{sfx.click();startGame();});</span></p>
+<p class="p1"><span class="s1">D.restartBtn.addEventListener('click',()=&gt;{sfx.click();startGame();});</span></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
