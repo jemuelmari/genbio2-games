@@ -1,292 +1,275 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
-    span.s1 {font-kerning: none}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concept 1: The 9 Life Processes</title>
+<style>
+    :root {
+        --bg:#0a0e1a; --panel:#151b2b; --card:#1e2640;
+        --text:#e2e8f0; --muted:#94a3b8;
+        --green:#10b981; --red:#ef4444; --blue:#3b82f6;
+        --purple:#8b5cf6; --gold:#fbbf24;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; user-select:none; }
+    body { background:var(--bg); color:var(--text); font-family:'Segoe UI', Roboto, sans-serif;
+        min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:20px;
+        background-image: radial-gradient(circle at 30% 20%, rgba(59,130,246,0.1), transparent 50%),
+                          radial-gradient(circle at 70% 80%, rgba(139,92,246,0.1), transparent 50%);
+    }
+    header { width:100%; max-width:950px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .back-btn { background:var(--panel); color:var(--muted); text-decoration:none; padding:10px 18px; border-radius:10px; font-weight:bold; border:1px solid rgba(255,255,255,0.1); font-size:0.9rem; transition:0.2s; }
+    .back-btn:hover { color:white; background:#2a3450; }
+    .hud { display:flex; gap:10px; }
+    .hud-box { background:var(--panel); padding:10px 18px; border-radius:10px; font-weight:bold; font-size:0.9rem; border-bottom:3px solid var(--blue); }
+    .hud-box span { color:var(--gold); }
+
+    .game-wrap { width:100%; max-width:950px; background:var(--panel); border-radius:20px; padding:30px; box-shadow:0 20px 50px rgba(0,0,0,0.6); border:1px solid rgba(59,130,246,0.2); }
+    .progress-track { width:100%; height:6px; background:rgba(255,255,255,0.08); border-radius:10px; margin-bottom:25px; overflow:hidden; }
+    .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,#3b82f6,#8b5cf6); transition:width 0.5s; }
+
+    #start-screen, #results-screen { display:none; text-align:center; }
+    #start-screen.active, #results-screen.active { display:block; }
+    #start-screen h1, #results-screen h1 { font-size:2rem; margin-bottom:15px; background:linear-gradient(135deg,#3b82f6,#8b5cf6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    #start-screen p, #results-screen p { color:var(--muted); font-size:1rem; line-height:1.6; max-width:640px; margin:0 auto 20px; }
+    .icon-big { font-size:4rem; margin-bottom:10px; animation:spin 6s linear infinite; }
+    @keyframes spin { from{transform:rotate(0);} to{transform:rotate(360deg);} }
+    .btn-primary { background:linear-gradient(135deg,#3b82f6,#8b5cf6); color:white; border:none; padding:16px 45px; border-radius:50px; font-size:1.05rem; font-weight:bold; text-transform:uppercase; letter-spacing:1px; cursor:pointer; transition:0.2s; box-shadow:0 0 25px rgba(59,130,246,0.5); }
+    .btn-primary:hover { transform:scale(1.05); }
+
+    #play-screen { display:none; }
+    #play-screen.active { display:block; }
+    .q-tag { display:inline-block; background:rgba(59,130,246,0.15); color:#93c5fd; padding:6px 16px; border-radius:20px; font-size:0.8rem; font-weight:bold; letter-spacing:2px; margin-bottom:15px; text-transform:uppercase; }
+    .q-text { font-size:1.4rem; font-weight:600; margin-bottom:22px; line-height:1.4; }
+    .options { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+    .option {
+        background:var(--card); border:2px solid rgba(255,255,255,0.1); padding:18px;
+        border-radius:12px; cursor:pointer; transition:0.2s; font-size:0.95rem; font-weight:600;
+        text-align:center;
+    }
+    .option:hover { border-color:var(--blue); transform:translateY(-3px); }
+    .option.correct { background:rgba(16,185,129,0.25); border-color:var(--green); }
+    .option.wrong { background:rgba(239,68,68,0.25); border-color:var(--red); }
+
+    .feedback { display:none; padding:16px 20px; border-radius:12px; margin-bottom:15px; line-height:1.5; font-size:0.95rem; }
+    .feedback.show { display:block; animation:slide 0.3s; }
+    .feedback.ok { background:rgba(16,185,129,0.15); border-left:4px solid var(--green); }
+    .feedback.bad { background:rgba(239,68,68,0.15); border-left:4px solid var(--red); }
+    @keyframes slide { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+
+    .next-btn { background:var(--purple); color:white; border:none; padding:12px 30px; border-radius:10px; font-weight:bold; cursor:pointer; display:none; font-size:0.95rem; transition:0.2s; }
+    .next-btn.show { display:inline-block; }
+    .next-btn:hover { background:#7c3aed; transform:scale(1.05); }
+
+    .level-badge { font-size:4rem; margin:10px 0; }
+    .level-title { font-size:1.6rem; font-weight:bold; color:var(--gold); margin-bottom:10px; }
+    .score-big { font-size:3rem; font-weight:900; margin:15px 0; }
+    .action-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:20px; }
+
+    @media (max-width:600px) {
+        .options { grid-template-columns:1fr; }
+        .q-text { font-size:1.15rem; }
+        .game-wrap { padding:20px; }
+    }
+</style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;title&gt;Concept 1: The 9 Life Processes&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1">&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>:root {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--bg:#0a0e1a; --panel:#151b2b; --card:#1e2640;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--text:#e2e8f0; --muted:#94a3b8;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--green:#10b981; --red:#ef4444; --blue:#3b82f6;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--purple:#8b5cf6; --gold:#fbbf24;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>* { box-sizing:border-box; margin:0; padding:0; user-select:none; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>body { background:var(--bg); color:var(--text); font-family:'Segoe UI', Roboto, sans-serif;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background-image: radial-gradient(circle at 30% 20%, rgba(59,130,246,0.1), transparent 50%),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>radial-gradient(circle at 70% 80%, rgba(139,92,246,0.1), transparent 50%);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>header { width:100%; max-width:950px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.back-btn { background:var(--panel); color:var(--muted); text-decoration:none; padding:10px 18px; border-radius:10px; font-weight:bold; border:1px solid rgba(255,255,255,0.1); font-size:0.9rem; transition:0.2s; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.back-btn:hover { color:white; background:#2a3450; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.hud { display:flex; gap:10px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.hud-box { background:var(--panel); padding:10px 18px; border-radius:10px; font-weight:bold; font-size:0.9rem; border-bottom:3px solid var(--blue); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.hud-box span { color:var(--gold); }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.game-wrap { width:100%; max-width:950px; background:var(--panel); border-radius:20px; padding:30px; box-shadow:0 20px 50px rgba(0,0,0,0.6); border:1px solid rgba(59,130,246,0.2); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.progress-track { width:100%; height:6px; background:rgba(255,255,255,0.08); border-radius:10px; margin-bottom:25px; overflow:hidden; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.progress-fill { height:100%; width:0%; background:linear-gradient(90deg,#3b82f6,#8b5cf6); transition:width 0.5s; }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#start-screen, #results-screen { display:none; text-align:center; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#start-screen.active, #results-screen.active { display:block; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#start-screen h1, #results-screen h1 { font-size:2rem; margin-bottom:15px; background:linear-gradient(135deg,#3b82f6,#8b5cf6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#start-screen p, #results-screen p { color:var(--muted); font-size:1rem; line-height:1.6; max-width:640px; margin:0 auto 20px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.icon-big { font-size:4rem; margin-bottom:10px; animation:spin 6s linear infinite; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@keyframes spin { from{transform:rotate(0);} to{transform:rotate(360deg);} }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-primary { background:linear-gradient(135deg,#3b82f6,#8b5cf6); color:white; border:none; padding:16px 45px; border-radius:50px; font-size:1.05rem; font-weight:bold; text-transform:uppercase; letter-spacing:1px; cursor:pointer; transition:0.2s; box-shadow:0 0 25px rgba(59,130,246,0.5); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-primary:hover { transform:scale(1.05); }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#play-screen { display:none; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#play-screen.active { display:block; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.q-tag { display:inline-block; background:rgba(59,130,246,0.15); color:#93c5fd; padding:6px 16px; border-radius:20px; font-size:0.8rem; font-weight:bold; letter-spacing:2px; margin-bottom:15px; text-transform:uppercase; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.q-text { font-size:1.4rem; font-weight:600; margin-bottom:22px; line-height:1.4; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.options { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.option {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background:var(--card); border:2px solid rgba(255,255,255,0.1); padding:18px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius:12px; cursor:pointer; transition:0.2s; font-size:0.95rem; font-weight:600;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>text-align:center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.option:hover { border-color:var(--blue); transform:translateY(-3px); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.option.correct { background:rgba(16,185,129,0.25); border-color:var(--green); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.option.wrong { background:rgba(239,68,68,0.25); border-color:var(--red); }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.feedback { display:none; padding:16px 20px; border-radius:12px; margin-bottom:15px; line-height:1.5; font-size:0.95rem; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.feedback.show { display:block; animation:slide 0.3s; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.feedback.ok { background:rgba(16,185,129,0.15); border-left:4px solid var(--green); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.feedback.bad { background:rgba(239,68,68,0.15); border-left:4px solid var(--red); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@keyframes slide { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.next-btn { background:var(--purple); color:white; border:none; padding:12px 30px; border-radius:10px; font-weight:bold; cursor:pointer; display:none; font-size:0.95rem; transition:0.2s; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.next-btn.show { display:inline-block; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.next-btn:hover { background:#7c3aed; transform:scale(1.05); }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.level-badge { font-size:4rem; margin:10px 0; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.level-title { font-size:1.6rem; font-weight:bold; color:var(--gold); margin-bottom:10px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.score-big { font-size:3rem; font-weight:900; margin:15px 0; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.action-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:20px; }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@media (max-width:600px) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.options { grid-template-columns:1fr; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.q-text { font-size:1.15rem; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.game-wrap { padding:20px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;header&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;a href="../index.html" class="back-btn"&gt;← Dashboard&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="hud"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="hud-box"&gt;Q: &lt;span id="hud-q"&gt;0&lt;/span&gt;/10&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="hud-box"&gt;Score: &lt;span id="hud-score"&gt;0&lt;/span&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/header&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;div class="game-wrap"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="progress-track"&gt;&lt;div class="progress-fill" id="prog"&gt;&lt;/div&gt;&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="start-screen" class="active"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="icon-big"&gt;🔄&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h1&gt;The 9 Life Processes&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p&gt;All living things must perform the same 9 fundamental life processes — but plants and animals do them in very different ways.<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>Master how each process works in both kingdoms!&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="btn-primary" id="start-btn"&gt;Start Challenge&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="play-screen"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="q-tag" id="q-tag"&gt;Question 1&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="q-text" id="q-text"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="options" id="options"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="feedback" id="feedback"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="next-btn" id="next-btn"&gt;Next →&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="results-screen"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="level-badge" id="level-badge"&gt;🌟&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h1 id="results-title"&gt;Concept Complete!&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="level-title" id="level-title"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="score-big" id="final-score"&gt;0/10&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p id="results-msg"&gt;&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="action-row"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="btn-primary" id="restart-btn"&gt;Retry Concept&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;a href="../index.html" class="back-btn" style="padding:16px 30px;"&gt;← Dashboard&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;script&gt;</span></p>
-<p class="p1"><span class="s1">const questions = [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q:"Which life process involves producing offspring?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Nutrition","Reproduction","Transport","Control"], correct:1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Reproduction ensures species survival. Both plants and animals can reproduce sexually and asexually."</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q:"How do animals get their nutrition?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Autotrophic (make own food)","Heterotrophic (consume other organisms)","Absorb from soil","Only through photosynthesis"], correct:1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Animals are heterotrophs — they consume other organisms. Plants are autotrophs — they make their own food."</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q:"Through what structures do plants exchange gases?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Lungs and gills","Stomata and lenticels","Kidneys","Xylem"], correct:1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Stomata (leaf pores) and lenticels (stem pores) are plants' gas exchange structures — like animals' lungs or gills."</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q:"What transports blood in animals?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Xylem and phloem","Heart and blood vessels","Stomata","Roots"], correct:1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"The circulatory system (heart + vessels + blood) transports oxygen, nutrients, and wastes in animals."</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q:"Which system controls body activities using electrical signals?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Endocrine","Nervous","Immune","Excretory"], correct:1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"The Nervous system uses electrical impulses (brain, spinal cord, nerves). The Endocrine uses hormones (slower, chemical)."</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q:"How do plants respond to light, gravity, and touch?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Through nerves","Through tropisms (growth responses)","Through hormones only","They don't respond"], correct:1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Tropisms are directional growth responses (phototropism = light, geotropism = gravity, thigmotropism = touch)."</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q:"What removes nitrogenous waste in animals?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Lungs","Kidneys","Intestines","Skin only"], correct:1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Kidneys filter blood and remove nitrogenous wastes (urea). They're the main excretory organs."</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q:"How do plants store wastes and maintain water balance?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Through kidneys","Through vacuoles and stomata","Through nerves","Through muscles"], correct:1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"Vacuoles store wastes and water; stomata regulate water loss through transpiration."</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q:"Which life process defends against disease?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Reproduction","Immune","Development","Nutrition"], correct:1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"The Immune system uses WBCs and antibodies (animals) or barriers and chemicals (plants) for defense."</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q:"Why is it important that all 9 processes happen?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>options:["Only reproduction matters","They work together to maintain LIFE and homeostasis","Only nutrition matters","They happen randomly"], correct:1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explain:"All processes work TOGETHER to keep the organism alive and maintain homeostasis — stable internal conditions."</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1">];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">let state={idx:0,score:0,answered:false};</span></p>
-<p class="p1"><span class="s1">const D={</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>start:document.getElementById('start-screen'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>play:document.getElementById('play-screen'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>results:document.getElementById('results-screen'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>startBtn:document.getElementById('start-btn'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>restartBtn:document.getElementById('restart-btn'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>nextBtn:document.getElementById('next-btn'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>qTag:document.getElementById('q-tag'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>qText:document.getElementById('q-text'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>options:document.getElementById('options'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>feedback:document.getElementById('feedback'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>hudQ:document.getElementById('hud-q'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>hudScore:document.getElementById('hud-score'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>prog:document.getElementById('prog'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>levelBadge:document.getElementById('level-badge'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>levelTitle:document.getElementById('level-title'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>finalScore:document.getElementById('final-score'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>resultsMsg:document.getElementById('results-msg')</span></p>
-<p class="p1"><span class="s1">};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">let audioCtx;</span></p>
-<p class="p1"><span class="s1">function beep(f,d,t='sine',v=0.15){</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>try{</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const o=audioCtx.createOscillator(),g=audioCtx.createGain();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>o.connect(g);g.connect(audioCtx.destination);o.type=t;o.frequency.value=f;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>g.gain.setValueAtTime(v,audioCtx.currentTime);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+d);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>o.start();o.stop(audioCtx.currentTime+d);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}catch(e){}</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p1"><span class="s1">const sfx={click:()=&gt;beep(500,0.08,'triangle',0.1),ok:()=&gt;{beep(600,0.12);setTimeout(()=&gt;beep(900,0.15),100);},bad:()=&gt;beep(150,0.3,'sawtooth',0.15),done:()=&gt;{beep(500,0.15);setTimeout(()=&gt;beep(700,0.15),150);setTimeout(()=&gt;beep(1000,0.3),300);}};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">function startGame(){</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>state={idx:0,score:0,answered:false};</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.start.classList.remove('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.results.classList.remove('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.play.classList.add('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.hudScore.textContent=0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>loadQ();</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">function loadQ(){</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(state.idx&gt;=questions.length){return endGame();}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>state.answered=false;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const q=questions[state.idx];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.qTag.textContent=`Question ${state.idx+1}`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.qText.textContent=q.q;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.hudQ.textContent=state.idx+1;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.prog.style.width=`${(state.idx/questions.length)*100}%`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.options.innerHTML='';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.feedback.className='feedback';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.nextBtn.classList.remove('show');</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>q.options.forEach((opt,i)=&gt;{</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const el=document.createElement('div');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>el.className='option';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>el.textContent=opt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>el.addEventListener('click',()=&gt;answer(i));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.options.appendChild(el);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">function answer(i){</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(state.answered) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>state.answered=true;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const q=questions[state.idx];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const isRight=i===q.correct;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.option').forEach((o,idx)=&gt;{</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>o.style.pointerEvents='none';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if(idx===q.correct) o.classList.add('correct');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>else if(idx===i) o.classList.add('wrong');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(isRight){</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>sfx.ok(); state.score++;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.hudScore.textContent=state.score;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.feedback.className='feedback show ok';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.feedback.innerHTML=`✅ &lt;strong&gt;Correct!&lt;/strong&gt; ${q.explain}`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}else{</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>sfx.bad();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.feedback.className='feedback show bad';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>D.feedback.innerHTML=`❌ &lt;strong&gt;Not quite.&lt;/strong&gt; ${q.explain}`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.nextBtn.classList.add('show');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.nextBtn.textContent=state.idx&lt;questions.length-1?'Next →':'See Results →';</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">D.nextBtn.addEventListener('click',()=&gt;{sfx.click();state.idx++;if(state.idx&gt;=questions.length)endGame();else loadQ();});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">function endGame(){</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.play.classList.remove('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.results.classList.add('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.prog.style.width='100%';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.finalScore.textContent=`${state.score}/${questions.length}`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const pct=state.score/questions.length;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>let badge,title,msg;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if(pct&gt;=0.85){badge='🏆';title='Process Master!';msg='You understand how life processes differ between plants and animals. Excellent comparative thinking!';}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>else if(pct&gt;=0.6){badge='🔄';title='Solid Comparator';msg='You know most processes well. Review the ones you missed to strengthen your understanding.';}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>else{badge='🌱';title='Growing Biologist';msg='Keep exploring! Notice how the same life process is done differently in plants vs animals.';}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.levelBadge.textContent=badge;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.levelTitle.textContent=title;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>D.resultsMsg.textContent=msg;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>sfx.done();</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">D.startBtn.addEventListener('click',()=&gt;{sfx.click();startGame();});</span></p>
-<p class="p1"><span class="s1">D.restartBtn.addEventListener('click',()=&gt;{sfx.click();startGame();});</span></p>
-<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+
+<header>
+    <a href="../index.html" class="back-btn">← Dashboard</a>
+    <div class="hud">
+        <div class="hud-box">Q: <span id="hud-q">0</span>/10</div>
+        <div class="hud-box">Score: <span id="hud-score">0</span></div>
+    </div>
+</header>
+
+<div class="game-wrap">
+    <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+
+    <div id="start-screen" class="active">
+        <div class="icon-big">🔄</div>
+        <h1>The 9 Life Processes</h1>
+        <p>All living things must perform the same 9 fundamental life processes — but plants and animals do them in very different ways. 
+        Master how each process works in both kingdoms!</p>
+        <button class="btn-primary" id="start-btn">Start Challenge</button>
+    </div>
+
+    <div id="play-screen">
+        <div class="q-tag" id="q-tag">Question 1</div>
+        <div class="q-text" id="q-text"></div>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+        <button class="next-btn" id="next-btn">Next →</button>
+    </div>
+
+    <div id="results-screen">
+        <div class="level-badge" id="level-badge">🌟</div>
+        <h1 id="results-title">Concept Complete!</h1>
+        <div class="level-title" id="level-title"></div>
+        <div class="score-big" id="final-score">0/10</div>
+        <p id="results-msg"></p>
+        <div class="action-row">
+            <button class="btn-primary" id="restart-btn">Retry Concept</button>
+            <a href="../index.html" class="back-btn" style="padding:16px 30px;">← Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<script>
+const questions = [
+    { q:"Which life process involves producing offspring?",
+      options:["Nutrition","Reproduction","Transport","Control"], correct:1,
+      explain:"Reproduction ensures species survival. Both plants and animals can reproduce sexually and asexually."
+    },
+    { q:"How do animals get their nutrition?",
+      options:["Autotrophic (make own food)","Heterotrophic (consume other organisms)","Absorb from soil","Only through photosynthesis"], correct:1,
+      explain:"Animals are heterotrophs — they consume other organisms. Plants are autotrophs — they make their own food."
+    },
+    { q:"Through what structures do plants exchange gases?",
+      options:["Lungs and gills","Stomata and lenticels","Kidneys","Xylem"], correct:1,
+      explain:"Stomata (leaf pores) and lenticels (stem pores) are plants' gas exchange structures — like animals' lungs or gills."
+    },
+    { q:"What transports blood in animals?",
+      options:["Xylem and phloem","Heart and blood vessels","Stomata","Roots"], correct:1,
+      explain:"The circulatory system (heart + vessels + blood) transports oxygen, nutrients, and wastes in animals."
+    },
+    { q:"Which system controls body activities using electrical signals?",
+      options:["Endocrine","Nervous","Immune","Excretory"], correct:1,
+      explain:"The Nervous system uses electrical impulses (brain, spinal cord, nerves). The Endocrine uses hormones (slower, chemical)."
+    },
+    { q:"How do plants respond to light, gravity, and touch?",
+      options:["Through nerves","Through tropisms (growth responses)","Through hormones only","They don't respond"], correct:1,
+      explain:"Tropisms are directional growth responses (phototropism = light, geotropism = gravity, thigmotropism = touch)."
+    },
+    { q:"What removes nitrogenous waste in animals?",
+      options:["Lungs","Kidneys","Intestines","Skin only"], correct:1,
+      explain:"Kidneys filter blood and remove nitrogenous wastes (urea). They're the main excretory organs."
+    },
+    { q:"How do plants store wastes and maintain water balance?",
+      options:["Through kidneys","Through vacuoles and stomata","Through nerves","Through muscles"], correct:1,
+      explain:"Vacuoles store wastes and water; stomata regulate water loss through transpiration."
+    },
+    { q:"Which life process defends against disease?",
+      options:["Reproduction","Immune","Development","Nutrition"], correct:1,
+      explain:"The Immune system uses WBCs and antibodies (animals) or barriers and chemicals (plants) for defense."
+    },
+    { q:"Why is it important that all 9 processes happen?",
+      options:["Only reproduction matters","They work together to maintain LIFE and homeostasis","Only nutrition matters","They happen randomly"], correct:1,
+      explain:"All processes work TOGETHER to keep the organism alive and maintain homeostasis — stable internal conditions."
+    }
+];
+
+let state={idx:0,score:0,answered:false};
+const D={
+    start:document.getElementById('start-screen'),
+    play:document.getElementById('play-screen'),
+    results:document.getElementById('results-screen'),
+    startBtn:document.getElementById('start-btn'),
+    restartBtn:document.getElementById('restart-btn'),
+    nextBtn:document.getElementById('next-btn'),
+    qTag:document.getElementById('q-tag'),
+    qText:document.getElementById('q-text'),
+    options:document.getElementById('options'),
+    feedback:document.getElementById('feedback'),
+    hudQ:document.getElementById('hud-q'),
+    hudScore:document.getElementById('hud-score'),
+    prog:document.getElementById('prog'),
+    levelBadge:document.getElementById('level-badge'),
+    levelTitle:document.getElementById('level-title'),
+    finalScore:document.getElementById('final-score'),
+    resultsMsg:document.getElementById('results-msg')
+};
+
+let audioCtx;
+function beep(f,d,t='sine',v=0.15){
+    try{
+        if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+        const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+        o.connect(g);g.connect(audioCtx.destination);o.type=t;o.frequency.value=f;
+        g.gain.setValueAtTime(v,audioCtx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+d);
+        o.start();o.stop(audioCtx.currentTime+d);
+    }catch(e){}
+}
+const sfx={click:()=>beep(500,0.08,'triangle',0.1),ok:()=>{beep(600,0.12);setTimeout(()=>beep(900,0.15),100);},bad:()=>beep(150,0.3,'sawtooth',0.15),done:()=>{beep(500,0.15);setTimeout(()=>beep(700,0.15),150);setTimeout(()=>beep(1000,0.3),300);}};
+
+function startGame(){
+    state={idx:0,score:0,answered:false};
+    D.start.classList.remove('active');
+    D.results.classList.remove('active');
+    D.play.classList.add('active');
+    D.hudScore.textContent=0;
+    loadQ();
+}
+
+function loadQ(){
+    if(state.idx>=questions.length){return endGame();}
+    state.answered=false;
+    const q=questions[state.idx];
+    D.qTag.textContent=`Question ${state.idx+1}`;
+    D.qText.textContent=q.q;
+    D.hudQ.textContent=state.idx+1;
+    D.prog.style.width=`${(state.idx/questions.length)*100}%`;
+    D.options.innerHTML='';
+    D.feedback.className='feedback';
+    D.nextBtn.classList.remove('show');
+
+    q.options.forEach((opt,i)=>{
+        const el=document.createElement('div');
+        el.className='option';
+        el.textContent=opt;
+        el.addEventListener('click',()=>answer(i));
+        D.options.appendChild(el);
+    });
+}
+
+function answer(i){
+    if(state.answered) return;
+    state.answered=true;
+    const q=questions[state.idx];
+    const isRight=i===q.correct;
+
+    document.querySelectorAll('.option').forEach((o,idx)=>{
+        o.style.pointerEvents='none';
+        if(idx===q.correct) o.classList.add('correct');
+        else if(idx===i) o.classList.add('wrong');
+    });
+
+    if(isRight){
+        sfx.ok(); state.score++;
+        D.hudScore.textContent=state.score;
+        D.feedback.className='feedback show ok';
+        D.feedback.innerHTML=`✅ <strong>Correct!</strong> ${q.explain}`;
+    }else{
+        sfx.bad();
+        D.feedback.className='feedback show bad';
+        D.feedback.innerHTML=`❌ <strong>Not quite.</strong> ${q.explain}`;
+    }
+
+    D.nextBtn.classList.add('show');
+    D.nextBtn.textContent=state.idx<questions.length-1?'Next →':'See Results →';
+}
+
+D.nextBtn.addEventListener('click',()=>{sfx.click();state.idx++;if(state.idx>=questions.length)endGame();else loadQ();});
+
+function endGame(){
+    D.play.classList.remove('active');
+    D.results.classList.add('active');
+    D.prog.style.width='100%';
+    D.finalScore.textContent=`${state.score}/${questions.length}`;
+    const pct=state.score/questions.length;
+    let badge,title,msg;
+    if(pct>=0.85){badge='🏆';title='Process Master!';msg='You understand how life processes differ between plants and animals. Excellent comparative thinking!';}
+    else if(pct>=0.6){badge='🔄';title='Solid Comparator';msg='You know most processes well. Review the ones you missed to strengthen your understanding.';}
+    else{badge='🌱';title='Growing Biologist';msg='Keep exploring! Notice how the same life process is done differently in plants vs animals.';}
+    D.levelBadge.textContent=badge;
+    D.levelTitle.textContent=title;
+    D.resultsMsg.textContent=msg;
+    sfx.done();
+}
+
+D.startBtn.addEventListener('click',()=>{sfx.click();startGame();});
+D.restartBtn.addEventListener('click',()=>{sfx.click();startGame();});
+</script>
 </body>
 </html>
