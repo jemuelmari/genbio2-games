@@ -59,7 +59,9 @@
     .game-card.pre::before { background: linear-gradient(90deg, #fbbf24, #ef4444); }
     .game-card.concept::before { background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
     .game-card.boss::before { background: linear-gradient(90deg, #ef4444, #fbbf24); }
+    .game-card.arcade::before { background: linear-gradient(90deg, #ec4899, #f97316, #fbbf24); }
     .game-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2); }
+    .game-card.arcade:hover { box-shadow: 0 15px 30px rgba(236, 72, 153, 0.3); }
     .game-card .icon { font-size: 2.2rem; }
     .game-card h2 { font-size: 1.15rem; color: var(--text); line-height: 1.3; }
     .game-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
@@ -72,6 +74,7 @@
     }
     .game-card.pre .tag { background: rgba(251,191,36,0.2); color: #fde68a; }
     .game-card.boss .tag { background: rgba(239,68,68,0.2); color: #fca5a5; }
+    .game-card.arcade .tag { background: rgba(236,72,153,0.2); color: #fbcfe8; }
 
     footer { margin-top: 60px; color: var(--muted); font-size: 0.9rem; }
 </style>
@@ -129,8 +132,26 @@
 
 </div>
 
+<!-- ================================================ -->
+<!-- ARCADE SECTION — Full-lesson interactive review -->
+<!-- ================================================ -->
+
+<div class="section-title">🕹️ Arcade Mode — Applied Review</div>
+
+<div class="games-grid">
+
+    <!-- ARCADE GAME: Organ System Survival -->
+    <a href="games/organ-system-survival.html" class="game-card arcade">
+        <div class="icon">🎮</div>
+        <h2>Organ System Survival</h2>
+        <p>Defend the body from falling organs! Match each organ to its correct system before homeostasis drops to 0%. Speed increases every wave.</p>
+        <span class="tag">Arcade</span>
+    </a>
+
+</div>
+
 <footer>
-    &copy; 2026 Interactive Learning Games
+    © 2026 Interactive Learning Games
 </footer>
 
 </body>
